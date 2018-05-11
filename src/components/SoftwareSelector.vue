@@ -35,10 +35,9 @@ export default {
     computed: {
         filteredSoftware: function() {
             // Filter software
-            var that = this;
             return this.software.filter(function(s) {
-                return s.name.includes(that.searchTerm);
-            });
+                return s.name.includes(this.searchTerm);
+            }.bind(this));
         }
     }
 };
