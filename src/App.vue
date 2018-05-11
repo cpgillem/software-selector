@@ -1,6 +1,8 @@
 <template>
   <div id="app">
+    <div class="container">
       <SoftwareSelector />
+    </div>
   </div>
 </template>
 

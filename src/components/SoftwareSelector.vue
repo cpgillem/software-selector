@@ -1,30 +1,47 @@
 <template>
-    <div>
-        <input 
-            v-model="searchTerm"
-            v-on:keyup="handleSearch"
-            v-on:keyup.enter="handleSearchEnter"
-            placeholder="Search for software..." 
-            type="text"
-        />
-        <button v-on:click="handleSearchEnter">Add</button>
-        <div v-if="err">{{ errMsg }}</div>
+    <div id="software-selector">
+        <div class="row">
+            <div class="col-sm">
+                <h1>Software Selector</h1>
+                <div class="input-group">
+                    <input 
+                        class="form-control"
+                        v-model="searchTerm"
+                        v-on:keyup="handleSearch"
+                        v-on:keyup.enter="handleSearchEnter"
+                        placeholder="Search for software..." 
+                        type="text"
+                        aria-describedby="searchHelp"
+                    />
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" v-on:click="handleSearchEnter">Add</button>
+                    </div>
+                </div>
+                <small class="form-text muted" id="searchHelp" v-if="err">{{ errMsg }}</small>
+                <hr/>
+            </div>
+        </div>
 
-        <h3>Available</h3>
-        <ul>
-            <li v-for="s in filteredSoftware" :key="s.id">
-                {{ s.name }}
-                <button v-on:click="s.selected = true">Add</button>
-            </li>
-        </ul>
-        
-        <h3>Selected</h3>
-        <ul>
-            <li v-for="s in selectedSoftware" :key="s.id">
-                {{ s.name }}
-                <button v-on:click="s.selected = false">Remove</button>
-            </li>
-        </ul>
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Available</h3>
+                <ul class="list-group">
+                    <li class="list-group-item" v-for="s in filteredSoftware" :key="s.id">
+                        {{ s.name }}
+                        <button class="btn btn-primary float-right" v-on:click="s.selected = true">Add</button>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3>Selected</h3>
+                <ul class="list-group">
+                    <li class="list-group-item" v-for="s in selectedSoftware" :key="s.id">
+                        {{ s.name }}
+                        <button class="btn btn-primary float-right" v-on:click="s.selected = false">Remove</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 </template>
 
