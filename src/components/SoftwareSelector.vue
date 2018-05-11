@@ -2,16 +2,23 @@
     <div>
         <input 
             v-model="searchTerm"
+            v-on:keyup="handleSearch"
             v-on:keyup.enter="handleSearchEnter"
             placeholder="Search for software..." 
             type="text"
         />
+        <button v-on:click="handleSearchEnter">Add</button>
+        <div v-if="err">{{ errMsg }}</div>
+
+        <h3>Available</h3>
         <ul>
             <li v-for="s in filteredSoftware" :key="s.id">
                 {{ s.name }}
                 <button v-on:click="s.selected = true">Add</button>
             </li>
         </ul>
+        
+        <h3>Selected</h3>
         <ul>
             <li v-for="s in selectedSoftware" :key="s.id">
                 {{ s.name }}
@@ -46,9 +53,19 @@ export default {
                     selected: false,
                 }
             ],
+
+            // Data for handling error messages.
+            err: false,
+            errMsg: '',
         };
     },
     methods: {
+        handleSearch(e) {
+            // If enter wasn't pressed, reset the error message.
+            if (e.keyCode !== 13) {
+                this.resetError();
+            }
+        },
         handleSearchEnter() {
             // If the list has a top result, add it.
             if (this.filteredSoftware.length > 0) {
@@ -56,8 +73,18 @@ export default {
 
                 // Reset the search.
                 this.searchTerm = '';
+            } else {
+                this.setError('No results.');
             }
         },
+        setError(msg) {
+            this.err = true;
+            this.errMsg = msg;
+        },
+        resetError() {
+            this.err = false;
+            this.errMsg = '';
+        }
     },
     computed: {
         filteredSoftware: function() {
