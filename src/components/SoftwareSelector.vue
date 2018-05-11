@@ -2,6 +2,7 @@
     <div>
         <input 
             v-model="searchTerm"
+            v-on:keyup.enter="handleSearchEnter"
             placeholder="Search for software..." 
             type="text"
         />
@@ -48,13 +49,21 @@ export default {
         };
     },
     methods: {
-        
+        handleSearchEnter() {
+            // If the list has a top result, add it.
+            if (this.filteredSoftware.length > 0) {
+                this.filteredSoftware[0].selected = true;
+
+                // Reset the search.
+                this.searchTerm = '';
+            }
+        },
     },
     computed: {
         filteredSoftware: function() {
             // Filter software
             return this.software.filter(function(s) {
-                return s.name.includes(this.searchTerm) && !s.selected;
+                return s.name.toLowerCase().includes(this.searchTerm.toLowerCase()) && !s.selected;
             }.bind(this));
         },
         selectedSoftware: function() {
