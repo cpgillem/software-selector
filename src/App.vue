@@ -1,15 +1,16 @@
 <template>
   <div id="app">
+      <SoftwareSelector />
   </div>
 </template>
 
 <script>
-import SoftwareList from './components/SoftwareList.vue'
+import SoftwareSelector from './components/SoftwareSelector.vue';
 
 export default {
   name: 'app',
   components: {
-    SoftwareList
+    SoftwareSelector
   }
 }
 </script>
