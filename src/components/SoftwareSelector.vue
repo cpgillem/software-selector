@@ -86,7 +86,9 @@ export default {
         handleSearchEnter() {
             // If the list has a top result, add it.
             if (this.filteredSoftware.length > 0) {
-                this.filteredSoftware[0].selected = true;
+                if (this.searchTerm.length > 0) {
+                    this.filteredSoftware[0].selected = true;
+                }
 
                 // Reset the search.
                 this.searchTerm = '';
